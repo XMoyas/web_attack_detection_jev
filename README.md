@@ -8,6 +8,20 @@
 
 Python **>= 3.10**。
 
+## TypeSafe JEV
+
+[JEV](https://typesafe.ai) 是 TypeSafe 的 System One 模型：不做开放式生成，而是对一段 `state` 同时问若干结构化问题。三种原语：
+
+- **Choice**：从给定标签里选一类，并返回置信度
+- **Noul**：回答是否，返回 0~1 的概率
+- **Score**：按有序量表打分，返回加权分数
+
+一次 `system_one` 里可以放多个问题，时延和费用接近只问一题，适合分类、拦截闸门、严重度评估。本仓库用官方 Python SDK [`typesafe-sdk`](https://pypi.org/project/typesafe-sdk/)，密钥走环境变量 `TYPESAFE_API_KEY`。
+
+**速度与成本：** JEV 面向判定，不生成长文本，单次调用通常在数百毫秒量级。多路问题打包进同一次请求，不必为「是否攻击 + 类型 + 严重度」各打一遍大模型。输出是数字和标签，token 开销远小于 Chat 补全。
+
+**和常用 LLM 的区别：** GPT / Claude 一类模型擅长推理和写作，做检测时要靠 prompt 约束 JSON，再自己解析，容易格式漂移，也没有原生的「是否」概率和选项置信度。JEV 把任务收成 Choice / Noul / Score，结果可直接进阈值（本仓库的 `allow` / `review` / `block`）。它不替代通用 LLM：不写解释、不对话、不做代码生成；Web 攻击检测这种低延迟、要校准分数的闸门，更合适。
+
 ## 架构
 
 ```text
