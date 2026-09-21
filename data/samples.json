@@ -1,0 +1,56 @@
+[
+  {
+    "name": "benign_search",
+    "payload": "红色运动鞋 42码",
+    "expect_type": "benign",
+    "note": "Ordinary search text"
+  },
+  {
+    "name": "benign_json",
+    "payload": "{\"user\":\"alice\",\"comment\":\"please ship tomorrow\"}",
+    "expect_type": "benign",
+    "note": "Normal API JSON"
+  },
+  {
+    "name": "xss",
+    "payload": "<script>alert(1)</script>",
+    "expect_type": "xss",
+    "note": "Classic XSS probe used by WAFs"
+  },
+  {
+    "name": "sql_injection",
+    "payload": "' OR '1'='1",
+    "expect_type": "sql_injection",
+    "note": "Classic SQLi tautology probe"
+  },
+  {
+    "name": "xxe",
+    "payload": "<?xml version=\"1.0\"?><!DOCTYPE foo [<!ENTITY xxe SYSTEM \"file:///etc/passwd\">]><foo>&xxe;</foo>",
+    "expect_type": "xxe",
+    "note": "Classic XXE entity probe"
+  },
+  {
+    "name": "command_injection",
+    "payload": "test; cat /etc/passwd",
+    "expect_type": "command_injection",
+    "note": "Shell metacharacter probe"
+  },
+  {
+    "name": "path_traversal",
+    "payload": "../../etc/passwd",
+    "expect_type": "path_traversal",
+    "note": "Directory traversal probe"
+  },
+  {
+    "name": "ssrf",
+    "payload": "http://169.254.169.254/latest/meta-data/",
+    "expect_type": "ssrf",
+    "note": "Cloud metadata SSRF probe"
+  },
+  {
+    "name": "ssti",
+    "payload": "{{7*7}}",
+    "expect_type": "ssti",
+    "note": "Template injection probe"
+  }
+]
