@@ -22,6 +22,9 @@ Python **>= 3.10**。
 
 **和常用 LLM 的区别：** GPT / Claude 一类模型擅长推理和写作，做检测时要靠 prompt 约束 JSON，再自己解析，容易格式漂移，也没有原生的「是否」概率和选项置信度。JEV 把任务收成 Choice / Noul / Score，结果可直接进阈值（本仓库的 `allow` / `review` / `block`）。它不替代通用 LLM：不写解释、不对话、不做代码生成；Web 攻击检测这种低延迟、要校准分数的闸门，更合适。
 
+## TODO
+[] 与常规大语言模型效果及速度对比
+
 ## 架构
 
 ```text
@@ -60,8 +63,6 @@ cp .env.example .env               # 填入 TYPESAFE_API_KEY
 ```bash
 pip install -i https://pypi.org/simple -r requirements.txt
 ```
-
-密钥只放在本地 `.env`，不要提交到 Git。
 
 ## 用法
 
